@@ -11,87 +11,45 @@ const OUTPUT_FORMAT = 'excel';  // Output format ('csv' or 'excel')
 const MAX_JOBS = 1;  // Maximum number of jobs to scrape
 const JOB_SEARCH_URL = 'https://ca.indeed.com/jobs?q=javascript&l=Montr%C3%A9al%2C+QC&from=searchOnDesktopSerp&vjk=0728fa42cde7b8a7';  // URL to scrape
 const HEADLESS = true;  // Puppeteer headless mode: true for background, false to see the browser in action
-const applicantInfo = `Applicant Name: Rabie Jebbor\n
-My Address: dar ta7ouna 23
-City, Province, Postal Code: 1234 fuck you street
-Email Address: rabue@mok.com
-Phone Number: 012345697
-Date: 21 june 2024
-Your LinkedIn Profile: linkedinRabie.com
+const applicantInfo = {
+    personalInfo: `Name: Your Name
+Address: Your Address
+City, Province, Postal Code: Your City, Province, Postal Code
+Email: Your Email
+Phone: Your Phone Number
+Date: Current Date
+LinkedIn: Your LinkedIn Profile`,
+
+    professionalExperience: `Job Title at Company Name (Job Duration), Job Title at Company Name (Job Duration), Job Title at Company Name (Job Duration)`,
+
+    skills: `Skill 1, Skill 2, Skill 3`,
+
+    languages: `Language 1 (Proficiency), Language 2 (Proficiency), Language 3 (Proficiency)`,
+
+    education: `Degree Name from Institution (Graduation Year), Degree Name from Institution (Graduation Year)`,
+
+    aboutMe: `A brief description about yourself.`
+};
+// ----------------------- //
+
+
+// Combining the applicant info into one description
+const applicantDescription = `${applicantInfo.personalInfo}
 
 PROFESSIONAL EXPERIENCE
-Javascript Developer
-At FACTUREE – The Online Manufacturer
-Dec 2022 - Present (Berlin, Germany)
-• Utilized React, Angular, Parse Server, and MongoDB
-to implement new features and optimize existing
-functions in an internal ERP system.
-• Developed a portal and platform for manufacturers,
-enhancing business operations and streamlining
-processes.
-• Significantly enhanced performance and user
-experience.
-Frontend Web Developer
-At KnameIt
-June 2021 to July 2022
-• Contributed to building and improving a cutting-edge
-web app for designers, enhancing its functionality and
-user interface.
-• Leveraged JavaScript, MeteorJS, BlazeJS, Sass,
-MongoDB, and ReactJS to develop and optimize
-various components.
-React Developer
-Online Booking Web App for Beauty Salons
-February 2021 to June 2021
-• Developed an online booking web app for beauty
-salons using ReactJS, MongoDB, Express, NodeJS, and
-AWS S3.
-• Ensured seamless booking experiences, resulting in
-increased bookings and reduced booking errors.
-• Enhanced the user interface and experience, leading to
-positive feedback from clients and increased operational
-efficiency.
-SKILLS & PROFICIENCIES
-React
-Angular
-JavaScript
-TypeScript
-HTML5 / CSS / Sass
-MongoDB
-React Native
-Meteor JS
-BlazeJS
-Node.js
-AWS
-ParseServer
-Serverless/AMPT
-Ionic
-Git
+${applicantInfo.professionalExperience}
+
+SKILLS
+${applicantInfo.skills}
+
 LANGUAGES
-English: Fluent
-French: Fluent
-Russian: Proficient
-German: A1 (Beginner)
-Arabic: Fluent
-Berber: Native
+${applicantInfo.languages}
 
 EDUCATION
-Bachelor’s Degree in Computer Engineering
-Dnipro University of Technology
-Graduated 2023
-Completed 2 Years in Medical Studies
-Dnipro State Medical University
-2017 – 2019
+${applicantInfo.education}
 
 ABOUT ME
-Passionate and dedicated web developer
-with a proven ability to quickly learn and
-adapt to new technologies. Committed to
-contributing to impactful projects that
-provide exceptional user experiences and
-drive business success.
-`;
-// ----------------------- //
+${applicantInfo.aboutMe}`;
 
 const timestamp = new Date().toISOString().replace(/T/, '_').replace(/\..+/, '').replace(/[-:]/g, '');
 
