@@ -1,7 +1,7 @@
 const puppeteer = require('puppeteer-extra');
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 const XLSX = require('xlsx');
-const { generateCoverLetter } = require("./aiChat");
+const { generateCoverLetter, extractJobData } = require("./aiChat");
 
 // Use the stealth plugin
 puppeteer.use(StealthPlugin());
