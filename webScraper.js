@@ -80,7 +80,7 @@ async function scrapeJobs(page, max = MAX_JOBS) {
             const jobPage = await page.browser().newPage();
             await jobPage.goto(job.href, { waitUntil: 'networkidle2' });
 
-            await delay(5000);
+
 
             const jobTitle = job.title;
             const jobUrl = job.href;
@@ -88,15 +88,26 @@ async function scrapeJobs(page, max = MAX_JOBS) {
             const jobDescription = await jobPage.$eval('.jobsearch-JobComponent-description', el => el.textContent.trim())
                 .catch(() => 'No description available');
 
-            const coverLetter = await generateCoverLetter(jobDescription, applicantInfo);
+            // const coverLetter = await generateCoverLetter(jobDescription, applicantInfo);
+            const jobData = await extractJobData(jobDescription)
 
-            jobsData.push({
-                jobTitle,
-                coverLetter,
-                jobUrl
-            });
+            if (jobData && Object.keys(jobData).length > 0) {
+                // Transform the nested jobRequirements into a flat string
+                const flatJobRequirements = jobData.jobRequirements.map(req => `${req.technologyName} (${req.yearsOfExperienceRequired} years)`).join(', ');
 
-            console.log(`Extracted data for: ${jobTitle}`);
+                jobsData.push({
+                    jobTitle,
+                    jobUrl,
+                    shortDescription: jobData.shortDescription,
+                    jobRequirements: flatJobRequirements,
+                    top5JobRequirements: jobData.top5JobRequirements
+                });
+
+                console.log(`Extracted data for: ${jobTitle}`);
+            } else {
+                console.warn(`No job data extracted for: ${jobTitle}`);
+            }
+
 
             await jobPage.close();
         }

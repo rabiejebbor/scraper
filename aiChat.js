@@ -16,6 +16,7 @@ const JobData = z.object({
     jobTitle: z.string(),
     jobRequirements: z.array(Technology),
     shortDescription: z.string(),
+    top5JobRequirements : z.string()
 });
 
 const model =  "gpt-4o-mini"
